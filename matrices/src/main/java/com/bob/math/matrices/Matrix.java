@@ -1,5 +1,7 @@
 package com.bob.math.matrices;
 
+import java.util.Arrays;
+
 public class Matrix {
     private double[][] mat;
     private Order order;
@@ -102,14 +104,41 @@ public class Matrix {
     public Matrix mult(Matrix m) {
         assert (getOrder().getColumn() == m.getOrder().getRow());
         Matrix result = new Matrix(getOrder().getRow(), m.getOrder().getColumn());
-
-        double sum = 0.00;
         for (int i=0; i < getOrder().getRow(); i++){
             for (int j = 0; j < getOrder().getColumn(); j++) {
-                result.mat[0][j] = sum + mat[0][j] * m.mat[j][0];
+                result.mat[i][j] = 0.00;
+                for (int k=0; k<getOrder().getRow(); k ++)
+                    result.mat[i][j] = result.mat[i][j] + mat[i][k] * m.mat[k][j];
             }
         }
         return result;
+    }
+
+
+    public Matrix tanspose() {
+        Matrix result = new Matrix(getOrder().getColumn(), getOrder().getRow());
+        for (int i=0; i<getOrder().getRow(); i++) {
+            for (int j=0; j<getOrder().getColumn(); j++) {
+                result.mat[i][j] = mat[j][i];
+            }
+        }
+        return result;
+    }
+
+    /**
+     * return a Unit Matrix
+     * @param r
+     * @return
+     */
+    public static Matrix UnitMatrix(int r) {
+
+         double[][] mat = new double[r][r];
+
+         for (int i=0; i< r; i++) {
+             Arrays.fill(mat[i],0.00d);
+             mat[i][i] = 1;
+         }
+         return new Matrix(mat);
     }
 
 

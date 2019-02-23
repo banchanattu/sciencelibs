@@ -48,4 +48,26 @@ public class MatrixTest {
             }
         }
     }
+
+    /**
+     * Test Unit matrix creation
+     */
+    @Test
+    public void testUnitMatCreation()
+    {
+        Matrix m  = Matrix.UnitMatrix(3);
+        /** Assert multiplication of two two dimensional Unit matrix is unit matrix.
+         */
+        assertTrue(m.mult(m).equals(m));
+        /** Assert a Matrix with two dimensional multiplied with Unit matrix is the original matrix
+ \        */
+         double[][] val = {{1,2,3},{4,5,6},{7,8,9}};
+         Matrix M = new Matrix(val);
+         assertTrue(M.mult(Matrix.UnitMatrix(M.getOrder().getRow())).equals(M));
+
+        /** Again check a unit matrix with a Matrix is the original matrix
+         *
+         */
+        assertTrue(Matrix.UnitMatrix(M.getOrder().getRow()).mult(M).equals(M));
+    }
 }
