@@ -76,7 +76,8 @@ public class Matrix {
     public boolean equals(Matrix m) {
         for (int i = 0; i < getOrder().getRow(); i++) {
             for (int j = 0; j < getOrder().getColumn(); j++) {
-                if (mat[i][j] != m.mat[i][j]) {
+
+                if ((Math.round((mat[i][j] - m.mat[i][j])*1000)/1000) != 0) {
                     return false;
                 }
             }
@@ -166,25 +167,39 @@ public class Matrix {
     }
 
     public Matrix inverse() {
-        assert (order.getColumn() == order.getRow());
-        Matrix result = Matrix.UnitMatrix(order.getRow());
-        try {
-            Matrix m = (Matrix) this.clone();
-            for (int i = 0; i < m.order.getRow(); i++) {
-                divideRow(m, i, m.mat[i][i]);
-                divideRow(result, i, result.mat[i][i]);
-                //for (int c=0; c<m.order.getRow(); c++) {
-                    rowDeduce(m, i);
-                    rowDeduce(result,i);
-                //}
+        assert (order.getRow() == order.getColumn());
+        assert (Matrix.det(this) != 0);
+        Matrix result = new Matrix(order.getRow(), order.getColumn()*2);
+        for (int i=0; i< order.getRow(); i++) {
+            for (int j=0; j <order.getColumn(); j++) {
+                result.mat[i][j] = mat[i][j];
+            }
+        }
+        /** Append the Adjugate Unit mtrix*/
+        for (int i= 0; i<order.getRow(); i++) {
+            for (int j=order.getColumn(); j< order.getColumn() * 2; j++) {
+                if ((j-order.getColumn()) == i)
+                    result.mat[i][j] = 1;
+                else
+                    result.mat[i][j] = 0;
 
             }
-        } catch (CloneNotSupportedException e) {
-            assert (false);
         }
-        return result;
+        for (int i = 0; i < order.getRow(); i++) {
+            divideRow(result, i, result.mat[i][i]);
+            rowDeduce(result,i);
+        }
+        Matrix inverse = new Matrix(order.getRow(), order.getColumn());
+        for (int i= 0; i<order.getRow(); i++) {
+            for (int j=order.getColumn(); j< order.getColumn() * 2; j++) {
+                inverse.mat[i][j-order.getColumn()] = result.mat[i][j];
+            }
+        }
+
+        return  inverse;
 
     }
+
 
     private static void divideRow(Matrix M, int row, double factor) {
         for (int i = 0; i < M.order.getColumn(); i++) {
@@ -193,10 +208,10 @@ public class Matrix {
     }
 
     private static void rowDeduce(Matrix M, int r) {
-        for (int row = 0; row < M.order.getColumn(); row++) {
-            if (row == r) continue;
+        for (int row = 0; row < M.order.getRow(); row++) {
+            if  (row == r) continue;
             double factor = M.mat[row][r];
-            for (int column = 0; column < M.order.getRow(); column++) {
+            for (int column = 0; column < M.order.getColumn(); column++) {
 
                 M.mat[row][column] = M.mat[row][column] - factor * M.mat[r][column];
             }
