@@ -70,4 +70,31 @@ public class MatrixTest {
          */
         assertTrue(Matrix.UnitMatrix(M.getOrder().getRow()).mult(M).equals(M));
     }
+
+    /**
+     * Test the determinant operator
+     */
+
+    @Test
+    public void testDeterminant(){
+        Matrix u = Matrix.UnitMatrix(3);
+        assertTrue(1.0 == Matrix.det(u));
+        double[][] val = {{1,2,3},{4,5,6},{7,8,9}};
+        Matrix M = new Matrix(val);
+        double det = Matrix.det(M);
+        assertTrue(0  == det);
+        double[][] val1 = {{4,5,6},{7,8,9},{10,11,11}};
+        Matrix M1 = new Matrix(val1);
+        double det1 = Matrix.det(M1);
+        assertTrue(3  == det1);
+    }
+
+    @Test
+    public void testInverse() {
+        Matrix u = Matrix.UnitMatrix(3);
+        assertTrue(u.equals(u.inverse()));
+        double[][] val = {{1,2,3},{4,5,6},{7,8,9}};
+        Matrix M = new Matrix(val);
+        assertTrue(u.equals(M.mult(M.inverse())));
+    }
 }
