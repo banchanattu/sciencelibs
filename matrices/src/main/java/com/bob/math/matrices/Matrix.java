@@ -77,7 +77,7 @@ public class Matrix {
         for (int i = 0; i < getOrder().getRow(); i++) {
             for (int j = 0; j < getOrder().getColumn(); j++) {
 
-                if ((Math.round((mat[i][j] - m.mat[i][j])*1000)/1000) != 0) {
+                if ((Math.round((mat[i][j] - m.mat[i][j])*1000000000)/1000000000) != 0) {
                     return false;
                 }
             }
