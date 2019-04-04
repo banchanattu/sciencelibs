@@ -18,6 +18,11 @@ public class Complex {
         this.imagPart = c.imagPart;
     }
 
+    public Complex(double real) {
+        this.realPart = real;
+        this.imagPart = 0d;
+    }
+
     public double magnitude() {
         return Math.sqrt(this.realPart * this.realPart + this.imagPart * this.imagPart);
     }

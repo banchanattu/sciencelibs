@@ -1,1 +1,1 @@
-include ':app', ':matrices', ':complexnumbers'
+include ':app', ':matrices', ':complexnumbers', ':complexmatrices'
