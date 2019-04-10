@@ -113,7 +113,7 @@ public class Matrix {
         assert (getOrder().getColumn() == m.getOrder().getRow());
         Matrix result = new Matrix(getOrder().getRow(), m.getOrder().getColumn());
         for (int i = 0; i < getOrder().getRow(); i++) {
-            for (int j = 0; j < getOrder().getColumn(); j++) {
+            for (int j = 0; j < m.getOrder().getColumn(); j++) {
                 result.mat[i][j] = 0.00;
                 for (int k = 0; k < getOrder().getRow(); k++)
                     result.mat[i][j] = result.mat[i][j] + mat[i][k] * m.mat[k][j];

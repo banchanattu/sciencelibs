@@ -119,7 +119,7 @@ public class ComplexMatrix {
             assert (getOrder().getColumn() == m.getOrder().getRow());
             ComplexMatrix result = new ComplexMatrix(getOrder().getRow(), m.getOrder().getColumn());
             for (int i = 0; i < getOrder().getRow(); i++) {
-                for (int j = 0; j < getOrder().getColumn(); j++) {
+                for (int j = 0; j < m.getOrder().getColumn(); j++) {
                     result.mat[i][j] = new Complex(0.00d,0.00d);
                     for (int k = 0; k < getOrder().getRow(); k++)
                         result.mat[i][j] = result.mat[i][j].add(mat[i][k].mult(m.mat[k][j]));
